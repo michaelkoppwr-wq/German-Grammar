@@ -1,0 +1,480 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Der Die Das</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: three gender-coloured blocks open the page; a sticky filter bar sits above endings grouped by gender, then topic cards with three lanes each, then a quiz. */
+:root{
+  --bg:#f4f6fc; --surface:#ffffff; --ink:#141a35; --muted:#566086; --line:#dde1f0;
+  --der:#2b55f5; --die:#d11f5a; --das:#087a3a;
+  --der-soft:#e5ebff; --der-ink:#1d3fc9;
+  --die-soft:#ffe4ed; --die-ink:#b1124a;
+  --das-soft:#d8f4e4; --das-ink:#07692f;
+  --focus:#7a3cf0;
+  --f-display:'Bricolage Grotesque','Avenir Next','Segoe UI',system-ui,sans-serif;
+  --f-body:'Figtree','Segoe UI',system-ui,sans-serif;
+  --f-mono:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1022; --surface:#171b37; --ink:#eef0ff; --muted:#a2aad2; --line:#2a3061;
+    --der-soft:#1c2658; --der-ink:#a9bcff;
+    --die-soft:#4a1431; --die-ink:#ff9fbd;
+    --das-soft:#0d3a25; --das-ink:#86e6ae;
+    --focus:#b79bff; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1022; --surface:#171b37; --ink:#eef0ff; --muted:#a2aad2; --line:#2a3061;
+  --der-soft:#1c2658; --der-ink:#a9bcff;
+  --die-soft:#4a1431; --die-ink:#ff9fbd;
+  --das-soft:#0d3a25; --das-ink:#86e6ae;
+  --focus:#b79bff; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.a-der{color:var(--der-ink)} .a-die{color:var(--die-ink)} .a-das{color:var(--das-ink)}
+a{color:inherit}
+
+/* hero */
+.hero{padding-block:44px 30px}
+.eyebrow{font:500 .78rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font:800 clamp(2.5rem,7vw,4.6rem)/1 var(--f-display);letter-spacing:-.025em;margin:.5rem 0 .9rem;text-wrap:balance}
+.lede{max-width:62ch;color:var(--muted);font-size:1.08rem;margin:0 0 6px}
+.jump{display:inline-block;margin-top:10px;font:500 .85rem var(--f-mono);letter-spacing:.06em;text-decoration:underline;text-underline-offset:4px}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
+.blk{border-radius:22px;padding:20px 22px 24px;color:#fff;display:flex;flex-direction:column;gap:8px}
+.blk.der{background:var(--der)} .blk.die{background:var(--die)} .blk.das{background:var(--das)}
+.blk .art{font:800 clamp(4.2rem,11vw,7.6rem)/.88 var(--f-display);letter-spacing:-.045em}
+.blk .lab{font:500 .78rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase}
+.blk p{margin:0;font-size:1rem}
+.blk .sx{font:500 .88rem/1.8 var(--f-mono);word-spacing:.15em}
+
+/* rules */
+.sec{padding-block:40px 6px}
+.sec h2{font:800 clamp(1.7rem,3.8vw,2.4rem)/1.1 var(--f-display);letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:18px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px 18px;min-width:0}
+.rule h3{font:700 1.15rem/1.25 var(--f-display);margin:10px 0 6px}
+.rule p{margin:0;font-size:.97rem}
+.tag{display:inline-block;font:500 .7rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.tag.der{background:var(--der-soft);color:var(--der-ink);border-color:transparent}
+.tag.die{background:var(--die-soft);color:var(--die-ink);border-color:transparent}
+.tag.das{background:var(--das-soft);color:var(--das-ink);border-color:transparent}
+
+/* toolbar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-block:1px solid var(--line);margin-top:34px}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding-block:10px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{font:500 .9rem var(--f-mono);padding:7px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"][data-g="all"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg button[aria-pressed="true"][data-g="der"]{background:var(--der);color:#fff;border-color:var(--der)}
+.seg button[aria-pressed="true"][data-g="die"]{background:var(--die);color:#fff;border-color:var(--die)}
+.seg button[aria-pressed="true"][data-g="das"]{background:var(--das);color:#fff;border-color:var(--das)}
+.find{flex:1 1 240px;min-width:0;padding:9px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:400 1rem var(--f-body)}
+.find::placeholder{color:var(--muted)}
+#count{font:400 .78rem var(--f-mono);color:var(--muted)}
+.none{margin:28px 0 0;padding:18px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+
+/* endings */
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font:400 .78rem var(--f-mono);color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.dots{display:inline-flex;gap:3px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line);display:block}
+.dots i.on{background:var(--ink)}
+.der .dots i.on{background:var(--der)} .die .dots i.on{background:var(--die)} .das .dots i.on{background:var(--das)}
+.grp{margin-top:28px}
+.grp-h{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.grp-h .a{font:800 2.4rem/1 var(--f-display);letter-spacing:-.035em}
+.grp-h.der .a{color:var(--der-ink)} .grp-h.die .a{color:var(--die-ink)} .grp-h.das .a{color:var(--das-ink)}
+.grp-h .d{color:var(--muted);font-size:.9rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:11px;min-width:0}
+.card-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 10px}
+.sfx{font:500 1.7rem/1 var(--f-mono);letter-spacing:-.02em;padding:7px 12px;border-radius:10px;overflow-wrap:anywhere}
+.card.der .sfx{background:var(--der-soft);color:var(--der-ink)}
+.card.die .sfx{background:var(--die-soft);color:var(--die-ink)}
+.card.das .sfx{background:var(--das-soft);color:var(--das-ink)}
+.rel{display:inline-flex;align-items:center;gap:7px;font:500 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.ex{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.ex li{display:flex;flex-wrap:wrap;gap:0 8px;align-items:baseline}
+.ex .ar{font-weight:700}
+.ex .w{font-weight:500}
+.ex .gl{color:var(--muted);font-size:.85rem}
+.exc,.note{font-size:.86rem;color:var(--muted);margin:0}
+.exc{border-top:1px dashed var(--line);padding-top:9px}
+.exc .k,.tip .k{font:500 .68rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin-right:8px}
+.exc span.x{white-space:nowrap}
+.exc .a-der,.exc .a-die,.exc .a-das{font-weight:700}
+
+/* topics */
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:18px 18px 16px;margin-top:14px}
+.topic h3{font:700 1.4rem/1.2 var(--f-display);letter-spacing:-.01em;margin:0 0 12px}
+.lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.lane{border-radius:14px;padding:12px 14px 14px;min-width:0}
+.lane.der{background:var(--der-soft)} .lane.die{background:var(--die-soft)} .lane.das{background:var(--das-soft)}
+.lane-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.lane-h .a{font:800 1.9rem/1 var(--f-display);letter-spacing:-.035em}
+.lane.der .a{color:var(--der-ink)} .lane.die .a{color:var(--die-ink)} .lane.das .a{color:var(--das-ink)}
+.lane-h .d{font-size:.82rem;color:var(--muted);flex:1 1 140px;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{background:var(--surface);color:var(--ink);border-radius:8px;padding:2px 9px;font-size:.93rem}
+.chip.hit{outline:2px solid var(--focus)}
+.tip{margin:12px 0 0;font-size:.93rem;color:var(--muted)}
+
+/* quiz */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:24px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;margin-top:18px}
+.stats{display:flex;flex-wrap:wrap;gap:6px 18px;font:400 .78rem var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.stats b{color:var(--ink);font-weight:500}
+#qw{font:800 clamp(2.3rem,6vw,3.7rem)/1.05 var(--f-display);letter-spacing:-.03em;margin:22px 0 8px;overflow-wrap:anywhere}
+#qg{color:var(--muted);min-height:1.6em;margin:0}
+.ansrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ans{font:800 1.7rem/1 var(--f-display);letter-spacing:-.02em;color:#fff;border:0;border-radius:16px;padding:22px 8px;cursor:pointer;transition:transform .12s}
+.ans:hover{transform:translateY(-2px)}
+.ans.der{background:var(--der)} .ans.die{background:var(--die)} .ans.das{background:var(--das)}
+.ans.dim{opacity:.4}
+.ans.right{outline:4px solid var(--ink);outline-offset:2px}
+.fb{margin:14px 0 0;min-height:3.2em}
+.fb.ok b{color:var(--das-ink)} .fb.bad b{color:var(--die-ink)}
+#nx{margin-top:6px;font:500 .95rem var(--f-mono);padding:10px 20px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);cursor:pointer}
+
+footer{padding-block:44px 56px;color:var(--muted);font-size:.9rem}
+footer p{max-width:70ch;margin:0}
+
+@media (max-width:760px){
+  .trio{grid-template-columns:1fr}
+  .blk .art{font-size:4.4rem}
+  .quiz{grid-template-columns:1fr;padding:18px}
+  .hero{padding-block:30px 22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="hero"><div class="wrap">
+  <p class="eyebrow">German noun gender</p>
+  <h1><span class="a-der">Der</span>, <span class="a-die">die</span>, <span class="a-das">das</span></h1>
+  <p class="lede">Gender is less random than it looks. Most German nouns give themselves away by their ending or by what they mean. This page sorts both, with the exceptions you need to know.</p>
+  <a class="jump" href="#quiz">Jump to the quiz</a>
+  <div class="trio">
+    <div class="blk der">
+      <div class="art">der</div>
+      <div class="lab">Masculine</div>
+      <p>Days, months and seasons. Weather and alcohol (not beer). Car brands. Male people.</p>
+      <div class="sx">-ismus -ling -ig -ist -or -eur</div>
+    </div>
+    <div class="blk die">
+      <div class="art">die</div>
+      <div class="lab">Feminine</div>
+      <p>Female people, flowers and trees, most fruit and vegetables, numbers, and every plural.</p>
+      <div class="sx">-ung -heit -keit -schaft -tion -tät -ei</div>
+    </div>
+    <div class="blk das">
+      <div class="art">das</div>
+      <div class="lab">Neuter</div>
+      <p>Cities, most countries, metals, colours, languages, young animals and verbs used as nouns.</p>
+      <div class="sx">-chen -lein -ment -um -ma</div>
+    </div>
+  </div>
+</div></header>
+
+<section class="sec"><div class="wrap">
+  <h2>Six rules that save the most guesses</h2>
+  <div class="rules">
+    <div class="rule"><span class="tag die">Plural</span><h3>Every plural is die</h3>
+      <p><span class="a-der">Der</span> Mann becomes <span class="a-die">die</span> Männer and <span class="a-das">das</span> Kind becomes <span class="a-die">die</span> Kinder. Gender only matters in the singular.</p></div>
+    <div class="rule"><span class="tag">Compounds</span><h3>The last word decides</h3>
+      <p><span class="a-der">Der</span> Handschuh takes Schuh. <span class="a-die">Die</span> Haustür takes Tür. <span class="a-das">Das</span> Wörterbuch takes Buch.</p></div>
+    <div class="rule"><span class="tag das">Diminutives</span><h3>-chen and -lein are always das</h3>
+      <p>Grammar beats biology. <span class="a-das">Das</span> Mädchen and <span class="a-das">das</span> Fräulein are neuter, even though they mean a girl and a young lady.</p></div>
+    <div class="rule"><span class="tag das">Verbs and adjectives</span><h3>Turned into a noun, it is das</h3>
+      <p><span class="a-das">Das</span> Essen (eating, food), <span class="a-das">das</span> Leben (life), <span class="a-das">das</span> Schöne (the beautiful). Any word made into a noun is neuter.</p></div>
+    <div class="rule"><span class="tag die">Final -e</span><h3>Ends in -e? Probably die</h3>
+      <p>About nine in ten are feminine: <span class="a-die">die</span> Lampe, <span class="a-die">die</span> Tasche. Exceptions are mostly male people and animals: <span class="a-der">der</span> Junge, <span class="a-der">der</span> Löwe, <span class="a-der">der</span> Affe.</p></div>
+    <div class="rule"><span class="tag">Loanwords</span><h3>Latin and Greek endings are predictable</h3>
+      <p>-ion, -tät, -ik, -ur, -ie are <span class="a-die">die</span>. -ment, -um, -ma are <span class="a-das">das</span>. -or, -ist, -ant, -us are <span class="a-der">der</span>.</p></div>
+  </div>
+</div></section>
+
+<div class="bar"><div class="wrap">
+  <div class="seg" role="group" aria-label="Filter by gender">
+    <button type="button" data-g="all" aria-pressed="true" id="f-all">All</button>
+    <button type="button" data-g="der" aria-pressed="false" id="f-der">der</button>
+    <button type="button" data-g="die" aria-pressed="false" id="f-die">die</button>
+    <button type="button" data-g="das" aria-pressed="false" id="f-das">das</button>
+  </div>
+  <input class="find" id="q" type="search" placeholder="Search an ending, a word or a topic: -ung, Wein, weather" aria-label="Search endings, words and topics" autocomplete="off">
+  <span id="count" aria-live="polite"></span>
+</div></div>
+
+<main>
+<section class="sec" id="endings"><div class="wrap">
+  <h2>Endings and patterns</h2>
+  <p class="lede">The ending of a noun is the strongest clue you have. The dots show how safe each one is.</p>
+  <div class="legend">
+    <span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span> Always: no real exceptions</span>
+    <span><span class="dots"><i class="on"></i><i class="on"></i><i></i></span> Reliable: a few exceptions</span>
+    <span><span class="dots"><i class="on"></i><i></i><i></i></span> Tendency: expect surprises</span>
+  </div>
+  <div id="sfx"></div>
+</div></section>
+
+<section class="sec" id="meaning"><div class="wrap">
+  <h2>Meaning categories</h2>
+  <p class="lede">Time, weather, drink, places: what a word means often fixes its gender. Each topic is sorted into its three lanes.</p>
+  <div id="topics"></div>
+</div></section>
+
+<div class="wrap"><p class="none" id="none" hidden>Nothing matches. Try a shorter search, or switch the filter back to All.</p></div>
+
+<section class="sec" id="quiz"><div class="wrap" style="scroll-margin-top:90px">
+  <h2>Test yourself</h2>
+  <p class="lede">Pick the article. Every wrong answer shows the rule that would have caught it.</p>
+  <div class="quiz">
+    <div>
+      <div class="stats"><span>Streak <b id="st">0</b></span><span>Best <b id="bs">0</b></span><span>Correct <b id="ok">0</b> of <b id="sn">0</b></span></div>
+      <div id="qw">Freiheit</div>
+      <p id="qg"></p>
+    </div>
+    <div>
+      <div class="ansrow">
+        <button type="button" class="ans der" data-a="der" id="a-der">der</button>
+        <button type="button" class="ans die" data-a="die" id="a-die">die</button>
+        <button type="button" class="ans das" data-a="das" id="a-das">das</button>
+      </div>
+      <p class="fb" id="fb" aria-live="polite">Choose der, die or das.</p>
+      <button type="button" id="nx" hidden>Next word</button>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><p>Built from standard German grammar rules. Tendencies are not laws, so the safest habit is to learn every noun together with its article.</p></div></footer>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var norm=function(s){return String(s).toLowerCase().replace(/ß/g,'ss').normalize('NFD').replace(/[̀-ͯ]/g,'')};
+var NAME={der:'masculine',die:'feminine',das:'neuter'};
+var REL=['','Tendency','Reliable','Always'];
+
+var S=function(g,s,r,ex,exc,note,l){return {g:g,s:s,r:r,ex:ex,exc:exc||'',note:note||'',l:l||''}};
+var SFX=[
+ S('der','-ismus',3,['Tourismus|tourism','Kapitalismus|capitalism','Optimismus|optimism']),
+ S('der','-ist',3,['Tourist|tourist','Journalist|journalist','Pianist|pianist']),
+ S('der','-ling',2,['Frühling|spring','Lehrling|apprentice','Schmetterling|butterfly'],'die Reling'),
+ S('der','-ig',2,['Honig|honey','König|king','Essig|vinegar']),
+ S('der','-ant',2,['Elefant|elephant','Diamant|diamond','Praktikant|intern'],'das Restaurant'),
+ S('der','-ent',2,['Student|student','Präsident|president','Dirigent|conductor'],'das Patent, das Talent'),
+ S('der','-eur',2,['Ingenieur|engineer','Friseur|hairdresser','Chauffeur|driver'],'das Interieur'),
+ S('der','-or',2,['Motor|engine','Autor|author','Doktor|doctor','Professor|professor'],'das Labor'),
+ S('der','-är',2,['Millionär|millionaire','Sekretär|secretary','Aktionär|shareholder'],'das Militär'),
+ S('der','-us',2,['Bus|bus','Zirkus|circus','Rhythmus|rhythm'],'das Virus, das Genus'),
+ S('der','-ich',2,['Teppich|carpet','Rettich|radish','Enterich|drake']),
+ S('der','-ner',2,['Gärtner|gardener','Redner|speaker','Rentner|pensioner']),
+ S('der','-er',1,['Lehrer|teacher','Computer|computer','Fahrer|driver'],'die Mutter, die Schwester, die Butter, das Fenster, das Wasser','People and tools made from a verb are masculine.'),
+ S('der','-en',1,['Wagen|car','Garten|garden','Kuchen|cake','Boden|floor'],'das Zeichen, das Examen','An infinitive used as a noun is das (das Essen), not der.'),
+ S('der','-el',1,['Löffel|spoon','Schlüssel|key','Himmel|sky','Vogel|bird'],'die Gabel, die Zwiebel, die Kartoffel, das Mittel'),
+
+ S('die','-ung',3,['Zeitung|newspaper','Wohnung|flat','Lösung|solution','Entschuldigung|apology'],'','Built from verbs: wohnen becomes die Wohnung.'),
+ S('die','-heit',3,['Freiheit|freedom','Gesundheit|health','Wahrheit|truth']),
+ S('die','-keit',3,['Möglichkeit|possibility','Fähigkeit|ability','Sehenswürdigkeit|sight']),
+ S('die','-schaft',3,['Freundschaft|friendship','Wissenschaft|science','Gesellschaft|society','Landschaft|landscape']),
+ S('die','-tät',3,['Universität|university','Qualität|quality','Aktivität|activity']),
+ S('die','-in',3,['Lehrerin|female teacher','Ärztin|female doctor','Freundin|female friend','Königin|queen'],'','Female forms only. Not female forms: das Benzin, das Vitamin, der Termin, der Kamin.'),
+ S('die','-ette',3,['Serviette|napkin','Toilette|toilet','Zigarette|cigarette']),
+ S('die','-ion',2,['Nation|nation','Information|information','Station|station','Lektion|lesson'],'das Stadion, der Skorpion','The endings -tion and -sion are die every time.'),
+ S('die','-ei',2,['Bäckerei|bakery','Polizei|police','Metzgerei|butcher shop','Türkei|Turkey'],'das Ei, der Brei, der Papagei'),
+ S('die','-ik',2,['Musik|music','Politik|politics','Technik|technology','Fabrik|factory'],'das Mosaik, das Plastik'),
+ S('die','-ur',2,['Natur|nature','Kultur|culture','Figur|figure','Tastatur|keyboard'],'das Abitur, das Futur'),
+ S('die','-enz / -anz',2,['Konferenz|conference','Existenz|existence','Toleranz|tolerance','Distanz|distance'],'der Tanz, der Kranz'),
+ S('die','-ie',2,['Familie|family','Energie|energy','Industrie|industry','Fotografie|photography'],'das Genie'),
+ S('die','-age',2,['Garage|garage','Montage|assembly','Reportage|report','Passage|passage'],'der Page, das Image'),
+ S('die','-ade',2,['Limonade|lemonade','Schokolade|chocolate','Marmelade|jam','Fassade|facade']),
+ S('die','-ine',2,['Maschine|machine','Kantine|canteen','Praline|filled chocolate','Apfelsine|orange']),
+ S('die','-ose',2,['Neurose|neurosis','Diagnose|diagnosis','Prognose|forecast','Tuberkulose|tuberculosis']),
+ S('die','-e',1,['Lampe|lamp','Tasche|bag','Blume|flower','Straße|street'],'der Name, der Junge, der Kollege, der Löwe, der Affe, das Ende, das Auge, das Interesse','About nine in ten nouns ending in -e are feminine. The masculine ones are mostly male people and animals.'),
+
+ S('das','-chen',3,['Mädchen|girl','Brötchen|bread roll','Häuschen|little house','Kätzchen|kitten'],'','A diminutive: it makes anything small and neuter, even people.'),
+ S('das','-lein',3,['Fräulein|young lady','Büchlein|little book','Vöglein|little bird']),
+ S('das','-ment',2,['Dokument|document','Instrument|instrument','Medikament|medicine','Element|element'],'der Zement, der Moment'),
+ S('das','-um',2,['Museum|museum','Zentrum|centre','Datum|date','Album|album','Studium|studies'],'der Konsum','Not this ending: der Baum, der Raum, der Traum.'),
+ S('das','-tum',2,['Eigentum|property','Christentum|Christianity','Wachstum|growth'],'der Reichtum, der Irrtum'),
+ S('das','-ma',2,['Thema|topic','Drama|drama','Klima|climate','Komma|comma'],'die Firma'),
+ S('das','-ett',2,['Ballett|ballet','Quartett|quartet','Duett|duet','Kabinett|cabinet']),
+ S('das','-ing',2,['Training|training','Meeting|meeting','Marketing|marketing','Camping|camping'],'der Pudding','English loanwords only. Older German -ing words differ: der Ring, der Hering.'),
+ S('das','-o',1,['Auto|car','Foto|photo','Kino|cinema','Büro|office','Konto|account'],'der Euro, die Disco, die Avocado'),
+ S('das','-nis',1,['Ergebnis|result','Geheimnis|secret','Erlebnis|experience','Zeugnis|certificate'],'die Kenntnis, die Erlaubnis, die Wildnis, die Finsternis','Leans neuter, with a handful of feminine ones.','Mixed'),
+ S('das','Ge-',1,['Gemüse|vegetables','Gebäude|building','Gebirge|mountain range','Gespräch|conversation','Geschenk|gift'],'der Gebrauch, der Geschmack, der Gedanke, die Geburt','A beginning, not an ending. Collective nouns with Ge- lean neuter.')
+];
+
+var T=[
+ {n:'Time and calendar',
+  L:{der:['Days, months, seasons, parts of the day','Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag, Januar, Juli, Dezember, Frühling, Sommer, Herbst, Winter, Morgen, Vormittag, Mittag, Abend, Tag, Monat'],
+     die:['Units of time, and night','Woche, Stunde, Minute, Sekunde, Nacht, Mitternacht, Zeit, Uhr, Jahreszeit'],
+     das:['Year and longer spans','Jahr, Jahrzehnt, Jahrhundert, Datum, Wochenende']},
+  tip:'Every day, month and season is der. Among the parts of the day only die Nacht breaks the pattern. Der Tag and der Monat are masculine, but das Jahr is neuter.'},
+ {n:'Weather and nature',
+  L:{der:['Rain, wind and sky: most weather words','Regen, Schnee, Hagel, Nebel, Wind, Sturm, Donner, Blitz, Frost, Schauer, Mond, Himmel, Stern'],
+     die:['Sun, clouds and temperature','Sonne, Wolke, Luft, Hitze, Kälte, Wärme, Temperatur, Brise, Dürre, Erde, Natur'],
+     das:['General weather, water and ground','Wetter, Gewitter, Klima, Eis, Wasser, Feuer, Licht, Meer, Tal, Gras']},
+  tip:'Der Mond but die Sonne, the reverse of Spanish and French. Das Wetter and das Gewitter are the main neuter exceptions to the masculine weather words.'},
+ {n:'Food and drink',
+  L:{der:['Alcohol (not beer), coffee, tea, juice, cheese, cakes','Wein, Sekt, Schnaps, Whisky, Wodka, Rum, Kaffee, Tee, Saft, Käse, Kuchen, Reis, Zucker, Honig, Salat, Apfel'],
+     die:['Most fruit, vegetables and dairy','Banane, Birne, Zitrone, Kartoffel, Tomate, Karotte, Orange, Erdbeere, Milch, Butter, Suppe, Pizza, Wurst, Schokolade'],
+     das:['Beer, water, bread, eggs, meat, produce','Bier, Wasser, Brot, Ei, Fleisch, Obst, Gemüse, Mehl, Salz, Öl, Müsli, Eis']},
+  tip:'Alcohol is masculine except das Bier. Most fruit and vegetables are feminine, with der Apfel, der Pfirsich, der Kohl and der Spargel as masculine exceptions.'},
+ {n:'People and animals',
+  L:{der:['Male people and many animals','Mann, Vater, Sohn, Bruder, Onkel, Junge, Lehrer, Hahn, Stier, Hund, Löwe, Bär, Fisch, Vogel'],
+     die:['Female people and animals','Frau, Mutter, Tochter, Schwester, Tante, Lehrerin, Ärztin, Kuh, Henne, Katze'],
+     das:['Children, young animals, diminutives, livestock','Kind, Baby, Mädchen, Fräulein, Kalb, Lamm, Küken, Ferkel, Fohlen, Pferd, Schaf, Schwein']},
+  tip:'Grammar overrides biology: das Mädchen is neuter because of -chen. Animal gender is often arbitrary (der Hund, die Katze, das Pferd). Add -in for a female job title: der Arzt, die Ärztin.'},
+ {n:'Places and geography',
+  L:{der:['Mountains, oceans, compass points, rivers without -e, a few countries','Berg, Gipfel, Ozean, Atlantik, Norden, Süden, Osten, Westen, Rhein, Main, Nil, See, Iran, Irak, Libanon, Sudan'],
+     die:['Rivers ending in -e, islands, plural and -ei countries','Elbe, Donau, Weser, Oder, Spree, Insel, Stadt, Schweiz, Türkei, Ukraine, Slowakei, Mongolei, USA, Niederlande'],
+     das:['Most countries, cities and continents','Deutschland, Frankreich, Italien, Europa, Asien, Berlin, Paris, Wien, Meer, Land, Dorf, Tal, Gebirge']},
+  tip:'Cities and countries are neuter, but you rarely see the article unless there is an adjective: das schöne Wien. Der See is a lake, die See is the sea.'},
+ {n:'Materials and money',
+  L:{der:['Rock and stone, steel, and major currencies','Stein, Fels, Marmor, Granit, Diamant, Sand, Stahl, Euro, Dollar, Cent, Franken, Yen'],
+     die:['Fabrics, coal, bronze and old coins','Wolle, Seide, Baumwolle, Kohle, Bronze, Mark, Krone, Münze'],
+     das:['Metals, elements and raw materials','Gold, Silber, Eisen, Kupfer, Blei, Zinn, Aluminium, Holz, Glas, Papier, Leder, Plastik, Geld, Pfund']},
+  tip:'Metals are neuter, except der Stahl. Elements ending in -stoff, such as der Sauerstoff and der Wasserstoff, are masculine.'},
+ {n:'Vehicles and brands',
+  L:{der:['Car brands, plus Zug, Bus, Wagen','Mercedes, BMW, Audi, Porsche, VW, Golf, Käfer, Zug, Bus, Wagen, Roller, Hubschrauber'],
+     die:['Named ships and planes, trains and boats','Titanic, Concorde, Harley, Bahn, U-Bahn, Straßenbahn, Fähre, Yacht, Rakete'],
+     das:['Generic vehicle words','Auto, Fahrrad, Motorrad, Flugzeug, Schiff, Boot, Taxi, Moped, Raumschiff']},
+  tip:'Car brands are masculine because der Wagen is: der BMW, der Audi. Ships and planes by name are feminine: die Titanic, die Concorde.'},
+ {n:'Verbs, colours, languages and numbers',
+  L:{der:['Verb stems with no ending','Lauf, Sprung, Schlag, Gang, Wurf, Besuch, Anfang, Beginn, Fall, Ruf'],
+     die:['Numbers as nouns, and big numbers','Eins, Zwei, Null, Million, Milliarde, Hälfte, Zahl'],
+     das:['Infinitives, colours, languages, fractions','Essen, Leben, Schwimmen, Lesen, Rot, Blau, Grün, Deutsch, Englisch, Viertel, Drittel, Ja, Nein']},
+  tip:'Any verb or adjective used as a noun is neuter: das Essen, das Gute. Nouns built from a bare verb stem are often masculine: der Besuch from besuchen.'}
+];
+
+function artSpan(s){var p=s.trim().split(' ');var a=p.shift();return '<span class="x"><span class="a-'+a+'">'+a+'</span> '+p.join(' ')+'</span>'}
+
+/* render endings */
+var sfxRoot=$('#sfx');
+['der','die','das'].forEach(function(g){
+  var items=SFX.filter(function(x){return x.g===g});
+  var html=items.map(function(x){
+    var dots=[1,2,3].map(function(i){return '<i class="'+(i<=x.r?'on':'')+'"></i>'}).join('');
+    var ex=x.ex.map(function(e){var p=e.split('|');return '<li><span class="ar a-'+g+'">'+g+'</span><span class="w">'+p[0]+'</span><span class="gl">'+p[1]+'</span></li>'}).join('');
+    var exc=x.exc?'<p class="exc"><span class="k">Exceptions</span>'+x.exc.split(', ').map(artSpan).join(', ')+'</p>':'';
+    var note=x.note?'<p class="note">'+x.note+'</p>':'';
+    var text=norm([x.s,x.ex.join(' '),x.exc,x.note].join(' '));
+    return '<article class="card '+g+'" data-g="'+g+'" data-t="'+text+'"><div class="card-top"><span class="sfx">'+x.s+'</span><span class="rel"><span class="dots">'+dots+'</span>'+(x.l||REL[x.r])+'</span></div><ul class="ex">'+ex+'</ul>'+note+exc+'</article>';
+  }).join('');
+  var sec=document.createElement('div');
+  sec.className='grp';sec.dataset.g=g;
+  sec.innerHTML='<div class="grp-h '+g+'"><span class="a">'+g+'</span><span class="d">'+items.length+' endings · '+NAME[g]+'</span></div><div class="cards">'+html+'</div>';
+  sfxRoot.appendChild(sec);
+});
+
+/* render topics */
+var topicRoot=$('#topics');
+T.forEach(function(t){
+  var lanes=['der','die','das'].map(function(g){
+    var d=t.L[g];
+    var chips=d[1].split(', ').map(function(w){return '<span class="chip" data-t="'+norm(w)+'">'+w+'</span>'}).join('');
+    return '<div class="lane '+g+'" data-g="'+g+'"><div class="lane-h"><span class="a">'+g+'</span><span class="d">'+d[0]+'</span></div><div class="chips">'+chips+'</div></div>';
+  }).join('');
+  var all=norm(t.n+' '+['der','die','das'].map(function(g){return t.L[g].join(' ')}).join(' ')+' '+t.tip);
+  var el=document.createElement('article');
+  el.className='topic';el.dataset.t=all;
+  el.innerHTML='<h3>'+t.n+'</h3><div class="lanes">'+lanes+'</div><p class="tip"><span class="k">Watch out</span>'+t.tip+'</p>';
+  topicRoot.appendChild(el);
+});
+
+/* filter and search */
+var state={g:'all',q:''};
+function apply(){
+  var g=state.g,q=state.q,nCards=0,nTopics=0;
+  $$('.card').forEach(function(c){
+    var show=(g==='all'||c.dataset.g===g)&&(!q||c.dataset.t.indexOf(q)>-1);
+    c.hidden=!show;if(show)nCards++;
+  });
+  $$('.grp').forEach(function(s){s.hidden=!s.querySelector('.card:not([hidden])')});
+  $$('.topic').forEach(function(t){
+    var matchQ=!q||t.dataset.t.indexOf(q)>-1,any=false;
+    t.querySelectorAll('.lane').forEach(function(l){var v=(g==='all'||l.dataset.g===g);l.hidden=!v;if(v)any=true});
+    var show=matchQ&&any;t.hidden=!show;if(show)nTopics++;
+    t.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('hit',!!q&&show&&c.dataset.t.indexOf(q)>-1)});
+  });
+  $('#endings').hidden=nCards===0&&(q||g!=='all')?true:false;
+  $('#meaning').hidden=nTopics===0&&(q||g!=='all')?true:false;
+  $('#none').hidden=!(nCards===0&&nTopics===0);
+  $('#count').textContent=nCards+' endings · '+nTopics+' topics';
+}
+$$('.seg button').forEach(function(b){
+  b.addEventListener('click',function(){
+    state.g=b.dataset.g;
+    $$('.seg button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+    apply();
+  });
+});
+$('#q').addEventListener('input',function(e){state.q=norm(e.target.value.trim());apply()});
+apply();
+
+/* quiz */
+var W=[
+['Freiheit','die','freedom','-heit is always die'],['Zeitung','die','newspaper','-ung is always die'],['Möglichkeit','die','possibility','-keit is always die'],
+['Freundschaft','die','friendship','-schaft is always die'],['Universität','die','university','-tät is always die'],['Nation','die','nation','-tion is always die'],
+['Bäckerei','die','bakery','-ei is nearly always die'],['Lehrerin','die','female teacher','-in on a female form is always die'],['Musik','die','music','-ik is usually die'],
+['Natur','die','nature','-ur is usually die'],['Familie','die','family','-ie is usually die'],['Garage','die','garage','-age is usually die'],['Schokolade','die','chocolate','-ade is usually die'],
+['Mädchen','das','girl','-chen is always das, even for people'],['Brötchen','das','bread roll','-chen is always das'],['Fräulein','das','young lady','-lein is always das'],
+['Dokument','das','document','-ment is usually das'],['Museum','das','museum','-um is usually das'],['Thema','das','topic','-ma is usually das'],['Auto','das','car','-o tends to be das'],
+['Ergebnis','das','result','-nis leans das'],['Training','das','training','English -ing loanwords are das'],['Eigentum','das','property','-tum is usually das'],['Gemüse','das','vegetables','Ge- collectives lean das'],
+['Tourismus','der','tourism','-ismus is always der'],['Frühling','der','spring','-ling is der, and seasons are der'],['Honig','der','honey','-ig is usually der'],['Tourist','der','tourist','-ist is always der'],
+['Elefant','der','elephant','-ant is usually der'],['Student','der','student','-ent is usually der'],['Motor','der','engine','-or is usually der'],['Millionär','der','millionaire','-är is usually der'],
+['Friseur','der','hairdresser','-eur is usually der'],['Bus','der','bus','-us is usually der'],
+['Montag','der','Monday','Days of the week are der'],['Juli','der','July','Months are der'],['Winter','der','winter','Seasons are der'],['Abend','der','evening','Parts of the day are der'],
+['Regen','der','rain','Weather words are mostly der'],['Wein','der','wine','Alcohol is der'],['Bier','das','beer','The exception among alcoholic drinks'],
+['Sonne','die','sun','Der Mond but die Sonne'],['Mond','der','moon','Der Mond but die Sonne'],['Wetter','das','weather','An exception to the der weather words'],
+['Nacht','die','night','The one part of the day that is die'],['Woche','die','week','Most units of time are die'],['Jahr','das','year','Longer spans are das'],
+['Rhein','der','Rhine','Rivers without -e are often der'],['Donau','die','Danube','Many German rivers are die'],['Deutschland','das','Germany','Countries are mostly das'],['Schweiz','die','Switzerland','One of the countries with an article'],
+['Gold','das','gold','Metals are das'],['Stahl','der','steel','The exception among metals'],['Euro','der','euro','Currencies are mostly der'],
+['Essen','das','eating, food','A verb used as a noun is das'],['Rot','das','red','Colours as nouns are das'],['Kind','das','child','Young beings are often das'],['Kuh','die','cow','Female animals are die'],['Pferd','das','horse','Many livestock words are das'],
+['Banane','die','banana','Most fruit is die'],['Apfel','der','apple','An exception to the die fruit rule'],['Titanic','die','the ship','Named ships are die'],['Mercedes','der','car brand','Car brands are der'],
+['Handschuh','der','glove','Compounds follow the last word: der Schuh'],['Haustür','die','front door','Compounds follow the last word: die Tür'],['Wörterbuch','das','dictionary','Compounds follow the last word: das Buch']
+];
+var order=[],pos=-1,streak=0,best=0,right=0,seen=0,locked=false;
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+var btns=$$('.ans');
+function nextWord(){
+  if(pos+1>=order.length){order=shuffle(W.slice());pos=-1}
+  pos++;locked=false;
+  var w=order[pos];
+  $('#qw').textContent=w[0];$('#qg').textContent='';
+  var fb=$('#fb');fb.className='fb';fb.textContent='Choose der, die or das.';
+  btns.forEach(function(b){b.classList.remove('right','dim')});
+  $('#nx').hidden=true;
+}
+function answer(a){
+  if(locked)return;locked=true;
+  var w=order[pos];seen++;
+  var ok=a===w[1];
+  if(ok){right++;streak++;if(streak>best)best=streak}else{streak=0}
+  btns.forEach(function(b){
+    if(b.dataset.a===w[1])b.classList.add('right');else b.classList.add('dim');
+  });
+  var fb=$('#fb');
+  fb.className='fb '+(ok?'ok':'bad');
+  fb.innerHTML=(ok?'<b>Correct.</b> ':'<b>Not quite, it is '+w[1]+'.</b> ')+w[3]+'.';
+  $('#qg').textContent=w[1]+' '+w[0]+' · '+w[2];
+  $('#st').textContent=streak;$('#bs').textContent=best;$('#ok').textContent=right;$('#sn').textContent=seen;
+  var nx=$('#nx');nx.hidden=false;nx.focus();
+}
+btns.forEach(function(b){b.addEventListener('click',function(){answer(b.dataset.a)})});
+$('#nx').addEventListener('click',nextWord);
+nextWord();
+})();
+</script>
+
+</body></html>
